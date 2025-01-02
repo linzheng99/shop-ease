@@ -1,6 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../user/dto/create-user.dto';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/modules/user/user.service';
 
 @Injectable()
 export class AuthService {
