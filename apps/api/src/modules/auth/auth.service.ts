@@ -7,6 +7,7 @@ import { verify } from 'argon2';
 export class AuthService {
   constructor(private readonly userService: UserService) { }
 
+  // Register user
   async registerUser(createUserDto: CreateUserDto) {
     const user = await this.userService.findByEmail(createUserDto.email);
 
@@ -17,6 +18,7 @@ export class AuthService {
     return this.userService.create(createUserDto);
   }
 
+  // Validate user
   async validateLocalUser(email: string, password: string) {
     const user = await this.userService.findByEmail(email);
 
@@ -30,7 +32,11 @@ export class AuthService {
       throw new UnauthorizedException('Invalid password');
     }
 
-    return user;
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+    };
   }
 }
 
