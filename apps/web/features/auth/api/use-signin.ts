@@ -4,13 +4,13 @@ import { toast } from 'sonner'
 
 import apiClient from '@/lib/axios'
 import { createSession } from '@/lib/session';
-import { type AxiosCommonError } from '@/types';
+import { type AxiosCommonError,type AxiosCommonResponse } from '@/types';
 
-interface ResponseType {
+export type ResponseType = AxiosCommonResponse<{
   email: string;
   name: string;
   id: string;
-}
+}>
 interface RequestType {
   email: string
   password: string
@@ -23,7 +23,7 @@ export const useSignin = () => {
       const response = await apiClient.post<ResponseType, RequestType>('/auth/signin', data)
       return response.data
     },
-    onSuccess: async (data) => {
+    onSuccess: async ({ data }) => {
       console.log('data', data)
       await createSession({
         user: {
