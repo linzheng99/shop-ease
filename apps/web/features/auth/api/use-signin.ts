@@ -4,12 +4,16 @@ import { toast } from 'sonner'
 
 import apiClient from '@/lib/axios'
 import { createSession } from '@/lib/session';
-import { type AxiosCommonError,type AxiosCommonResponse } from '@/types';
+import { type AxiosCommonError, type AxiosCommonResponse } from '@/types';
 
 export type ResponseType = AxiosCommonResponse<{
-  email: string;
-  name: string;
-  id: string;
+  user: {
+    email: string;
+    name: string;
+    id: string;
+  }
+  accessToken: string;
+  refreshToken: string;
 }>
 interface RequestType {
   email: string
@@ -24,15 +28,11 @@ export const useSignin = () => {
       return response.data
     },
     onSuccess: async ({ data }) => {
-      console.log('data', data)
+      const { user, accessToken, refreshToken } = data
       await createSession({
-        user: {
-          id: data.id,
-          name: data.name,
-          email: data.email
-        },
-        accessToken: '',
-        refreshToken: '',
+        user,
+        accessToken,
+        refreshToken,
       })
       router.push('/')
       toast.success('Sign in success!')
