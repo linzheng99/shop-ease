@@ -7,9 +7,16 @@ import { UserModule } from './modules/user/user.module';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpExceptionFilter } from './common/exceptions/http-exception.filter';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [AuthModule, UserModule],
+  imports: [
+    AuthModule,
+    UserModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+  ],
   controllers: [AppController],
   providers: [
     AppService,

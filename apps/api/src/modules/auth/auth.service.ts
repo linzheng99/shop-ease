@@ -2,10 +2,16 @@ import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/co
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { UserService } from 'src/modules/user/user.service';
 import { verify } from 'argon2';
+import { JwtService } from '@nestjs/jwt';
+import { User } from '@prisma/client';
+import { AuthJwtPayload } from './types/auth-jwtPayload';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) { }
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+  ) { }
 
   // Register user
   async registerUser(createUserDto: CreateUserDto) {
@@ -32,11 +38,39 @@ export class AuthService {
       throw new UnauthorizedException('Invalid password');
     }
 
+    return user;
+  }
+
+  async login(user: User) {
+    const { accessToken, refreshToken } = await this.generateTokens(user);
+
     return {
-      id: user.id,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+      },
+      accessToken,
+      refreshToken,
+    }
+  }
+
+  async generateTokens(user: User) {
+    const payload: AuthJwtPayload = {
+      sub: user.id,
       email: user.email,
       name: user.name,
     };
-  }
-}
 
+    const [accessToken, refreshToken] = await Promise.all([
+      this.jwtService.signAsync(payload),
+      this.jwtService.signAsync(payload, { expiresIn: process.env.JWT_REFRESH_EXPIRES_IN }),
+    ]);
+
+    return {
+      accessToken,
+      refreshToken,
+    };
+  }
+
+}

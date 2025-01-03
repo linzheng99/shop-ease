@@ -2,6 +2,7 @@ import { Controller, Post, Body, UseGuards, Req, Request } from '@nestjs/common'
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { User } from '@prisma/client';
 
 @Controller('auth')
 export class AuthController {
@@ -14,7 +15,7 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('signin')
-  signin(@Request() req: { user: { id: string, email: string, name: string } }) {
-    return req.user;
+  signin(@Request() req: { user: User }) {
+    return this.authService.login(req.user);
   }
 }
