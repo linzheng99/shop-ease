@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner'
 
 import apiClient from '@/lib/axios'
+import { createSession } from '@/lib/session';
 import { type AxiosCommonError } from '@/types';
 
 interface ResponseType {
@@ -22,7 +23,17 @@ export const useSignin = () => {
       const response = await apiClient.post<ResponseType, RequestType>('/auth/signin', data)
       return response.data
     },
-    onSuccess: () => {
+    onSuccess: async (data) => {
+      console.log('data', data)
+      await createSession({
+        user: {
+          id: data.id,
+          name: data.name,
+          email: data.email
+        },
+        accessToken: '',
+        refreshToken: '',
+      })
       router.push('/')
       toast.success('Sign in success!')
     },
