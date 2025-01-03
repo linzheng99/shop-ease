@@ -3,25 +3,27 @@
 import { LogOut } from "lucide-react"
 import { redirect } from "next/navigation"
 
+import PageLoader from "@/components/page-loader"
 import {
   Avatar,
   AvatarFallback,
 } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Separator } from "@/components/ui/separator"
 import { useCurrent } from "@/features/auth/api/use-current"
 import { deleteSession } from "@/lib/session"
 
-import { Button } from "./ui/button"
-import { Separator } from "./ui/separator"
-
 export default function UserButton() {
-  const { data: session } = useCurrent()
+  const { data: session, isLoading } = useCurrent()
   const { user } = session || {}
+
+  if (isLoading) return <PageLoader />
 
   if (!user) {
     return (
