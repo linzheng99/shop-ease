@@ -1,10 +1,11 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { UserService } from 'src/modules/user/user.service';
+import { verify } from 'argon2';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   async registerUser(createUserDto: CreateUserDto) {
     const user = await this.userService.findByEmail(createUserDto.email);
@@ -14,6 +15,22 @@ export class AuthService {
     }
 
     return this.userService.create(createUserDto);
+  }
+
+  async validateLocalUser(email: string, password: string) {
+    const user = await this.userService.findByEmail(email);
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    const isPasswordValid = await verify(user.password, password);
+
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid password');
+    }
+
+    return user;
   }
 }
 
