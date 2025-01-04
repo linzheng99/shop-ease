@@ -55,3 +55,27 @@ export async function getSession() {
 export async function deleteSession() {
   (await cookies()).delete(AUTH_COOKIE)
 }
+
+export async function updateSession({
+  accessToken,
+  refreshToken,
+}: {
+  accessToken: string;
+  refreshToken: string;
+}) {
+  const cookie = (await cookies()).get(AUTH_COOKIE)?.value
+  if (!cookie) return null
+
+  const { payload } = await jwtVerify<Session>(cookie, encodedKey)
+  if (!payload) throw new Error('session verify error')
+
+  const newPayload: Session = {
+    user: {
+      ...payload.user,
+    },
+    accessToken,
+    refreshToken,
+  }
+
+  await createSession(newPayload)
+}
