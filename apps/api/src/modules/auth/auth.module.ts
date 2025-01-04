@@ -8,13 +8,16 @@ import { JwtModule } from '@nestjs/jwt';
 import jwtConfig from './config/jwt-config';
 import { ConfigModule } from '@nestjs/config';
 import { JwtStrategy } from './strategies/jwt-strategy';
+import refreshConfig from './config/refresh-config';
+import { RefreshJwtStrategy } from './strategies/refresh-jwt-strategy';
 
 @Module({
   imports: [
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(jwtConfig),
+    ConfigModule.forFeature(refreshConfig),
   ],
   controllers: [AuthController],
-  providers: [AuthService, UserService, PrismaService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, UserService, PrismaService, LocalStrategy, JwtStrategy, RefreshJwtStrategy],
 })
 export class AuthModule {}
