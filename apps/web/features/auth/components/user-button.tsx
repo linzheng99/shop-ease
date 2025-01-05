@@ -17,11 +17,12 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Separator } from "@/components/ui/separator"
 import { useCurrent } from "@/features/auth/api/use-current"
-import { deleteSession } from "@/lib/session"
+import { useSignout } from "@/features/auth/api/use-signout"
 
 export default function UserButton() {
   const { data: session, isLoading } = useCurrent()
   const { user } = session || {}
+  const { mutate } = useSignout()
 
   if (isLoading) return <PageLoader />
 
@@ -35,10 +36,6 @@ export default function UserButton() {
 
   const avatarFallback = user?.name?.charAt(0).toUpperCase() || 'U'
 
-  async function handleLogout() {
-    await deleteSession()
-    redirect('/sign-in')
-  }
 
   return (
     <DropdownMenu modal={false}>
@@ -62,7 +59,7 @@ export default function UserButton() {
         <Separator className='mb-1' />
         <DropdownMenuItem
           className='flex justify-center items-center gap-2 text-red-500'
-          onClick={handleLogout}
+          onClick={() => mutate()}
         >
           <LogOut />Logout
         </DropdownMenuItem>
