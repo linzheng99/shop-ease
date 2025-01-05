@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
+import { FcGoogle } from "react-icons/fc";
 import { type z } from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -38,6 +39,10 @@ export function SignInForm() {
 
   function onSubmit(values: z.infer<typeof signInSchema>) {
     mutate({ json: values })
+  }
+
+  function handleGoogleLogin() {
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google/login`;
   }
 
   return (
@@ -77,7 +82,20 @@ export function SignInForm() {
           </form>
         </Form>
       </CardContent>
-      <Separator className='px-7 mb-2' />
+      <Separator />
+      <div className="flex flex-col gap-y-2.5 px-7 py-5">
+        <Button 
+          variant="outline" 
+          size="lg" 
+          className="w-full relative" 
+          onClick={() => handleGoogleLogin()} 
+          disabled={isPending}
+        >
+          <FcGoogle className="size-5 absolute left-2.5 top-1/2 -translate-y-1/2" />
+          Sign in with Google
+        </Button>
+      </div>
+      <Separator />
       <CardContent className='text-center p-7 text-sm'>
         <p>
           Don't have an account?
