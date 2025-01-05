@@ -2,8 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner'
 
-import apiClient from '@/lib/axios'
-import { type AxiosCommonError } from '@/types';
+import apiClient from '@/lib/apiClient'
 
 interface ResponseType {
   password: string;
@@ -15,24 +14,25 @@ interface ResponseType {
   updatedAt: Date;
 }
 interface RequestType {
-  email: string
-  name: string
-  password: string
+  json: {
+    email: string
+    name: string
+    password: string
+  }
 }
 
 export const useSignup = () => {
   const router = useRouter()
-  const mutation = useMutation<ResponseType, AxiosCommonError, RequestType>({
-    mutationFn: async (data) => {
-      const response = await apiClient.post<ResponseType, RequestType>('/auth/signup', data)
-      return response.data
+  const mutation = useMutation<ResponseType, Error, RequestType>({
+    mutationFn: async ({ json }) => {
+      const response = await apiClient.post<ResponseType>('/auth/signup', json)
+      return response
     },
     onSuccess: () => {
       toast.success('Register success!')
       router.push('/sign-in')
     },
-    onError: (error) => {
-      const message = error.response?.data?.message || error.message
+    onError: ({ message }) => {
       toast.error(`Register failed: ${message}`)
     }
   })

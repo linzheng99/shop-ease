@@ -2,30 +2,24 @@ import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner'
 
-import apiClient from '@/lib/axios'
+import apiClient from '@/lib/apiClient'
 import { createSession } from '@/lib/session';
-import { type AxiosCommonError, type AxiosCommonResponse } from '@/types';
 
-export type ResponseType = AxiosCommonResponse<{
-  user: {
-    email: string;
-    name: string;
-    id: string;
-  }
-  accessToken: string;
-  refreshToken: string;
-}>
+import { type SignInResponseType } from '../types';
+
 interface RequestType {
-  email: string
-  password: string
+  json: {
+    email: string
+    password: string
+  }
 }
 
 export const useSignin = () => {
   const router = useRouter()
-  const mutation = useMutation<ResponseType, AxiosCommonError, RequestType>({
-    mutationFn: async (data) => {
-      const response = await apiClient.post<ResponseType, RequestType>('/auth/signin', data)
-      return response.data
+  const mutation = useMutation<SignInResponseType, Error, RequestType>({
+    mutationFn: async ({ json }) => {
+      const response = await apiClient.post<SignInResponseType>('/auth/signin', json)
+      return response
     },
     onSuccess: async ({ data }) => {
       const { user, accessToken, refreshToken } = data
@@ -37,8 +31,7 @@ export const useSignin = () => {
       router.push('/')
       toast.success('Sign in success!')
     },
-    onError: (error) => {
-      const message = error.response?.data?.message || error.message
+    onError: ({ message }) => {
       toast.error(`Sign in failed: ${message}`)
     }
   })

@@ -38,7 +38,7 @@ export function SignUpForm() {
   })
 
   function onSubmit(values: z.infer<typeof signUpSchema>) {
-    mutate(values)
+    mutate({ json: values })
   }
 
   return (
