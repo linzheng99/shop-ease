@@ -31,9 +31,11 @@ export class AuthService {
     return this.userService.create(createUserDto);
   }
 
-  // Validate user
+  // local strategy validate user
   async validateLocalUser(email: string, password: string) {
     const user = await this.userService.findByEmail(email);
+
+    // TODO: add roles when local strategy returns user
 
     if (!user) {
       throw new UnauthorizedException('User not found');
@@ -51,6 +53,8 @@ export class AuthService {
   async login(user: User) {
     const { accessToken, refreshToken } = await this.generateTokens(user);
     const hashedRefreshToken = await hash(refreshToken);
+
+    // TODO: add roles when local strategy returns user
 
     await this.userService.updateHashedRefreshToken(user.id, hashedRefreshToken);
 
@@ -83,8 +87,9 @@ export class AuthService {
     };
   }
 
-  // jwt validate
+  // jwt strategy validate user
   async validateJwtUser(userId: string) {
+    // TODO: add roles when jwt strategy returns user
     const user = await this.userService.findById(userId);
     if (!user) {
       throw new UnauthorizedException('User not found');
@@ -97,8 +102,9 @@ export class AuthService {
     };
   }
 
-  // refresh jwt validate
+  // refresh jwt strategy validate user
   async validateRefreshToken(userId: string, refreshToken: string) {
+    // TODO: add roles when refresh jwt strategy returns user
     const user = await this.userService.findById(userId);
     if (!user) {
       throw new UnauthorizedException('User not found');
