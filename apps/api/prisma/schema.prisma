@@ -14,15 +14,16 @@ datasource db {
 }
 
 model User {
-  id            String         @id @default(uuid())
-  email         String         @unique
-  password      String
-  name          String
-  isActive      Boolean        @default(true)
-  roles         Role[]
-  refreshTokens RefreshToken[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id                 String         @id @default(uuid())
+  email              String         @unique
+  password           String
+  name               String
+  hashedRefreshToken String?
+  isActive           Boolean        @default(true)
+  roles              Role[]
+  refreshTokens      RefreshToken[]
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
 }
 
 model Role {

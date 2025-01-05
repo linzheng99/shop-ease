@@ -34,6 +34,12 @@ export class AuthController {
   refreshToken(@Request() req: { user: User }) {
     return this.authService.refreshToken(req.user);
   }
+  
+  @UseGuards(JwtAuthGuard)
+  @Post('signout')
+  async signout(@Request() req: { user: User }) {
+    return this.authService.signout(req.user);
+  }
 
   @UseGuards(GoogleAuthGuard)
   @Get('google/login')
@@ -47,4 +53,5 @@ export class AuthController {
 
     res.redirect(`http://localhost:3000/api/auth/google/callback?userId=${user.id}&name=${user.name}&email=${user.email}&accessToken=${accessToken}&refreshToken=${refreshToken}`);
   }
+
 }
