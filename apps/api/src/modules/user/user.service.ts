@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { hash } from 'argon2';
+import { PrismaService } from 'src/prisma/prisma.service';
+
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
     const { password, ...user } = createUserDto;
@@ -31,7 +32,10 @@ export class UserService {
     });
   }
 
-  async updateHashedRefreshToken(id: string, hashedRefreshToken: string | null) {
+  async updateHashedRefreshToken(
+    id: string,
+    hashedRefreshToken: string | null,
+  ) {
     return await this.prisma.user.update({
       where: { id },
       data: { hashedRefreshToken },

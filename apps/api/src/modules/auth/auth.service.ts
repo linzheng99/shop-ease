@@ -1,13 +1,19 @@
-import { ConflictException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { CreateUserDto } from '../user/dto/create-user.dto';
-import { UserService } from 'src/modules/user/user.service';
-import { hash, verify } from 'argon2';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
-import { AuthJwtPayload } from './types/auth-jwtPayload';
-import refreshConfig from './config/refresh-config';
-import { ConfigType } from '@nestjs/config';
+import { hash, verify } from 'argon2';
+import { UserService } from 'src/modules/user/user.service';
+
+import { CreateUserDto } from '../user/dto/create-user.dto';
 import jwtConfig from './config/jwt-config';
+import refreshConfig from './config/refresh-config';
+import { AuthJwtPayload } from './types/auth-jwtPayload';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +24,7 @@ export class AuthService {
     private readonly refreshTokenConfig: ConfigType<typeof refreshConfig>,
     @Inject(jwtConfig.KEY)
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
-  ) { }
+  ) {}
 
   // Register user
   async registerUser(createUserDto: CreateUserDto) {
@@ -56,7 +62,10 @@ export class AuthService {
 
     // TODO: add roles when local strategy returns user
 
-    await this.userService.updateHashedRefreshToken(user.id, hashedRefreshToken);
+    await this.userService.updateHashedRefreshToken(
+      user.id,
+      hashedRefreshToken,
+    );
 
     return {
       user: {
@@ -66,7 +75,7 @@ export class AuthService {
       },
       accessToken,
       refreshToken,
-    }
+    };
   }
 
   async generateTokens(user: User) {
@@ -77,7 +86,9 @@ export class AuthService {
     };
 
     const [accessToken, refreshToken] = await Promise.all([
-      this.jwtService.signAsync(payload, { expiresIn: this.jwtConfiguration.signOptions.expiresIn }),
+      this.jwtService.signAsync(payload, {
+        expiresIn: this.jwtConfiguration.signOptions.expiresIn,
+      }),
       this.jwtService.signAsync(payload, this.refreshTokenConfig),
     ]);
 
@@ -110,7 +121,10 @@ export class AuthService {
       throw new UnauthorizedException('User not found');
     }
 
-    const hashedRefreshToken = await verify(user.hashedRefreshToken, refreshToken);
+    const hashedRefreshToken = await verify(
+      user.hashedRefreshToken,
+      refreshToken,
+    );
     if (!hashedRefreshToken) {
       throw new UnauthorizedException('Invalid refresh token');
     }
@@ -126,7 +140,10 @@ export class AuthService {
     const { accessToken, refreshToken } = await this.generateTokens(user);
     const hashedRefreshToken = await hash(refreshToken);
 
-    await this.userService.updateHashedRefreshToken(user.id, hashedRefreshToken);
+    await this.userService.updateHashedRefreshToken(
+      user.id,
+      hashedRefreshToken,
+    );
 
     return {
       user: {

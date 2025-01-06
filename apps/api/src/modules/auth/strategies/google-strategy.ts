@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 import { ConfigType } from '@nestjs/config';
+import { PassportStrategy } from '@nestjs/passport';
+import { HttpsProxyAgent } from 'https-proxy-agent';
+import { Strategy, VerifyCallback } from 'passport-google-oauth20';
+
 import { AuthService } from '../auth.service';
 import googleOauthConfig from '../config/google-oauth-config';
-import { HttpsProxyAgent } from 'https-proxy-agent';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
@@ -19,7 +20,9 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       callbackURL: googleConfig.callbackURL,
       scope: ['email', 'profile'],
     });
-    const agent = new HttpsProxyAgent(process.env.HTTP_PROXY || 'http://127.0.0.1:7890');
+    const agent = new HttpsProxyAgent(
+      process.env.HTTP_PROXY || 'http://127.0.0.1:7890',
+    );
     this._oauth2.setAgent(agent);
   }
 

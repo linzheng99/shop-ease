@@ -1,6 +1,15 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  NestInterceptor,
+} from '@nestjs/common';
 import { map, Observable } from 'rxjs';
-import { RESPONSE_SUCCESS_CODE, RESPONSE_SUCCESS_MSG } from '../constants/response';
+
+import {
+  RESPONSE_SUCCESS_CODE,
+  RESPONSE_SUCCESS_MSG,
+} from '../constants/response';
 
 @Injectable()
 export class TransformInterceptor implements NestInterceptor {
@@ -13,6 +22,6 @@ export class TransformInterceptor implements NestInterceptor {
           message: RESPONSE_SUCCESS_MSG,
         };
       }),
-    )
+    );
   }
 }

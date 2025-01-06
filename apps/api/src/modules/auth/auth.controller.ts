@@ -1,16 +1,25 @@
-import { Controller, Post, Body, UseGuards, Req, Request, Get, Res } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { CreateUserDto } from '../user/dto/create-user.dto';
-import { LocalAuthGuard } from './guards/local-auth.guard';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { User } from '@prisma/client';
-import { RefreshAuthGuard } from './guards/refresh-auth.guard';
-import { GoogleAuthGuard } from './guards/google-auth.guard';
 import { Response } from 'express';
+
+import { CreateUserDto } from '../user/dto/create-user.dto';
+import { AuthService } from './auth.service';
 import { Public } from './decorators/public-decorator';
+import { GoogleAuthGuard } from './guards/google-auth.guard';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { RefreshAuthGuard } from './guards/refresh-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Public()
   @Post('signup')
@@ -46,7 +55,7 @@ export class AuthController {
   @Public()
   @UseGuards(GoogleAuthGuard)
   @Get('google/login')
-  async googleLogin() { }
+  async googleLogin() {}
 
   @Public()
   @UseGuards(GoogleAuthGuard)
@@ -55,7 +64,8 @@ export class AuthController {
     const response = await this.authService.login(req.user);
     const { user, accessToken, refreshToken } = response;
 
-    res.redirect(`http://localhost:3000/api/auth/google/callback?userId=${user.id}&name=${user.name}&email=${user.email}&accessToken=${accessToken}&refreshToken=${refreshToken}`);
+    res.redirect(
+      `http://localhost:3000/api/auth/google/callback?userId=${user.id}&name=${user.name}&email=${user.email}&accessToken=${accessToken}&refreshToken=${refreshToken}`,
+    );
   }
-
 }
