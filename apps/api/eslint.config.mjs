@@ -44,8 +44,7 @@ export default [
 
       parserOptions: {
         project: 'tsconfig.json',
-        tsconfigRootDir:
-          '/Users/linzheng/project/next-nest-template-turbo/apps/api',
+        tsconfigRootDir: __dirname,
       },
     },
 
