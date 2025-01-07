@@ -1,1 +1,1 @@
-export const AUTH_COOKIE = 'next_nest_session'
+export const AUTH_COOKIE = 'shop_ease_session'

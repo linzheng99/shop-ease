@@ -1,5 +1,5 @@
 {
-  "name": "next-nest-template-turbo",
+  "name": "shop-ease",
   "private": true,
   "scripts": {
     "build": "turbo build",
