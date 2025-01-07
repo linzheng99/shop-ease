@@ -10,6 +10,7 @@ export type Session = {
   user: {
     id: string;
     name: string;
+    role: string;
     email: string;
   };
   accessToken: string;
