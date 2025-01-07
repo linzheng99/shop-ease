@@ -20,8 +20,7 @@ import { useCurrent } from "@/features/auth/api/use-current"
 import { useSignout } from "@/features/auth/api/use-signout"
 
 export default function UserButton() {
-  const { data: session, isLoading } = useCurrent()
-  const { user } = session || {}
+  const { data: user, isLoading } = useCurrent()
   const { mutate } = useSignout()
 
   if (isLoading) return <PageLoader />
