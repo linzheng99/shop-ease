@@ -1,23 +1,16 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Instrument_Sans } from "next/font/google";
 import { Toaster } from "sonner";
 
 import QueryProvider from "@/components/query-provider";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-});
+const sansSerif = Instrument_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Next & Nest",
-  description: "Full stack template project",
+  title: "Shop Ease",
+  description: "Shop Ease",
 };
 
 export default function RootLayout({
@@ -27,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={sansSerif.className}>
         <QueryProvider>
           <Toaster />
           {children}
