@@ -41,4 +41,10 @@ export class UserService {
       data: { hashedRefreshToken },
     });
   }
+
+  async getUserStores(id: string) {
+    return await this.prisma.store.findMany({
+      where: { userId: id },
+    });
+  }
 }

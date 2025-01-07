@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { HttpExceptionFilter } from './common/exceptions/http-exception.filter';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { AuthModule } from './modules/auth/auth.module';
+import { StoreModule } from './modules/store/store.module';
 import { UserModule } from './modules/user/user.module';
 import { PrismaService } from './prisma/prisma.service';
 
@@ -17,6 +18,7 @@ import { PrismaService } from './prisma/prisma.service';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    StoreModule,
   ],
   controllers: [AppController],
   providers: [
