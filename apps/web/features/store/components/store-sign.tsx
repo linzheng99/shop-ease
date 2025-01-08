@@ -15,7 +15,7 @@ export default function StoreSign() {
       size="icon"
       className="bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0"
     >
-      <Store className="h-4 w-4 shrink-0 opacity-50 text-purple-600" />
+      <Store className="h-4 w-4 shrink-0 opacity-50 text-amber-600 dark:text-white" />
     </Button>
   )
 }
