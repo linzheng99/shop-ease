@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 import { CreateStoreDto } from './dto/create-store.dto';
@@ -25,7 +29,7 @@ export class StoreService {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      throw new UnauthorizedException('User not found');
     }
 
     if (store && user.role !== 'BUSINESS') {
@@ -35,6 +39,21 @@ export class StoreService {
           role: 'BUSINESS',
         },
       });
+    }
+
+    return store;
+  }
+
+  async getStoreById(id: string) {
+    const store = await this.prisma.store.findUnique({
+      where: { id },
+      include: {
+        products: true,
+      },
+    });
+
+    if (!store) {
+      throw new NotFoundException('Store not found');
     }
 
     return store;

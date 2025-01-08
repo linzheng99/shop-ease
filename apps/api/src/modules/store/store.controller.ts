@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Request } from '@nestjs/common';
 import { User } from '@prisma/client';
 
 import { Public } from '../../common/decorators/public-decorator';
@@ -18,5 +18,10 @@ export class StoreController {
   @Post('create')
   createStore(@Body() body: CreateStoreDto, @Request() req: { user: User }) {
     return this.storeService.createStore(body, req.user.id);
+  }
+
+  @Get(':id')
+  getStore(@Param('id') id: string) {
+    return this.storeService.getStoreById(id);
   }
 }
