@@ -22,7 +22,7 @@ export default function StoresPage() {
       {
         !data?.length ? (
           <div className="flex flex-col items-center justify-center h-full gap-4">
-            <h1 className="text-2xl font-bold">You don't have any store yet</h1>
+            <h1 className="text-2xl font-bold text-center">You don't have any store yet</h1>
             <Button variant="default" onClick={handleCreateStore}>Create Store</Button>
           </div>
         ) : (

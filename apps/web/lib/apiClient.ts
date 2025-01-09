@@ -42,17 +42,19 @@ class ApiClient {
       });
     }
 
+    const isFormData = config.data instanceof FormData;
+
     const requestConfig: RequestInit = {
       ...config,
       method,
       headers: {
-        'Content-Type': 'application/json',
+        ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
         ...config.headers,
       },
     };
 
     if (config.data) {
-      requestConfig.body = JSON.stringify(config.data);
+      requestConfig.body = isFormData ? config.data : JSON.stringify(config.data);
     }
 
     if (this.requestInterceptor) {
@@ -103,6 +105,10 @@ class ApiClient {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   patch<T>(url: string, data?: any, config?: RequestConfig): Promise<T> {
     return this.request<T>(url, 'PATCH', { ...config, data });
+  }
+
+  upload<T>(url: string, data: FormData, config?: RequestConfig): Promise<T> {
+    return this.request<T>(url, 'POST', { ...config, data });
   }
 }
 

@@ -2,6 +2,7 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 import { Instrument_Sans } from "next/font/google";
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Toaster } from "sonner";
 
 import QueryProvider from "@/components/query-provider";
@@ -30,7 +31,9 @@ export default function RootLayout({
         >
           <QueryProvider>
             <Toaster />
-            {children}
+            <NuqsAdapter>
+              {children}
+            </NuqsAdapter>
           </QueryProvider>
         </ThemeProvider>
       </body>

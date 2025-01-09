@@ -11,9 +11,9 @@ export default function StoreActions({ storeId }: { storeId: string }) {
       href: `/stores/${storeId}/products/create`,
     },
     {
-      label: 'Add Billboard',
+      label: 'Billboards',
       icon: PlusIcon,
-      href: `/stores/${storeId}/billboards/create`,
+      href: `/stores/${storeId}/billboards`,
     },
     {
       label: 'Add Category',

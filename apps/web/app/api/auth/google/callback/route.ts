@@ -11,13 +11,14 @@ export async function GET(req: NextRequest) {
   const userId = searchParams.get("userId");
   const name = searchParams.get("name");
   const email = searchParams.get("email");
-
+  const role = searchParams.get("role");
   if (
     !accessToken ||
     !refreshToken ||
     !userId ||
     !name ||
-    !email
+    !email ||
+    !role
   )
     throw new Error("Google Ouath Failed!");
 
@@ -25,6 +26,7 @@ export async function GET(req: NextRequest) {
     user: {
       id: userId,
       name: name,
+      role: role,
       email: email,
     },
     accessToken,
