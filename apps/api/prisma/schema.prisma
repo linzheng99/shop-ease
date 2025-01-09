@@ -72,9 +72,9 @@ model Billboard {
   id        String   @id @default(cuid())
   label     String
   imageId   String   @unique
-  image     Image    @relation(fields: [imageId], references: [id])
+  image     Image    @relation(fields: [imageId], references: [id], onDelete: Cascade)
   storeId   String
-  store     Store    @relation(fields: [storeId], references: [id])
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -82,6 +82,7 @@ model Billboard {
 model Image {
   id        String     @id @default(cuid())
   url       String
+  name      String?
   productId String?
   product   Product?   @relation(fields: [productId], references: [id])
   billboard Billboard?
