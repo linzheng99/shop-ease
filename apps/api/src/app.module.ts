@@ -7,7 +7,10 @@ import { AppService } from './app.service';
 import { HttpExceptionFilter } from './common/exceptions/http-exception.filter';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { AuthModule } from './modules/auth/auth.module';
+import { BillboardModule } from './modules/billboard/billboard.module';
+import { ImageModule } from './modules/image/image.module';
 import { StoreModule } from './modules/store/store.module';
+import { UploadsModule } from './modules/uploads/uploads.module';
 import { UserModule } from './modules/user/user.module';
 import { PrismaService } from './prisma/prisma.service';
 
@@ -19,6 +22,9 @@ import { PrismaService } from './prisma/prisma.service';
       isGlobal: true,
     }),
     StoreModule,
+    UploadsModule,
+    BillboardModule,
+    ImageModule,
   ],
   controllers: [AppController],
   providers: [
