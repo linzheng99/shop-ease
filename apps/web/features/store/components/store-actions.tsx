@@ -6,29 +6,29 @@ import { Button } from "@/components/ui/button"
 export default function StoreActions({ storeId }: { storeId: string }) {
   const actions = [
     {
-      label: 'Add Product',
-      icon: PlusIcon,
-      href: `/stores/${storeId}/products/create`,
-    },
-    {
       label: 'Billboards',
       icon: PlusIcon,
       href: `/stores/${storeId}/billboards`,
     },
     {
-      label: 'Add Category',
+      label: 'Categories',
       icon: PlusIcon,
-      href: `/stores/${storeId}/categories/create`,
+      href: `/stores/${storeId}/categories`,
     },
     {
-      label: 'Add Color',
+      label: 'Colors',
       icon: PlusIcon,
-      href: `/stores/${storeId}/colors/create`,
+      href: `/stores/${storeId}/colors`,
     },
     {
-      label: 'Add Size',
+      label: 'Sizes',
       icon: PlusIcon,
-      href: `/stores/${storeId}/sizes/create`,
+      href: `/stores/${storeId}/sizes`,
+    },
+    {
+      label: 'Products',
+      icon: PlusIcon,
+      href: `/stores/${storeId}/products`,
     },
   ]
 
