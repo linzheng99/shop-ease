@@ -9,6 +9,7 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 import { AuthModule } from './modules/auth/auth.module';
 import { BillboardModule } from './modules/billboard/billboard.module';
 import { CategoryModule } from './modules/category/category.module';
+import { ColorModule } from './modules/color/color.module';
 import { ImageModule } from './modules/image/image.module';
 import { SizeModule } from './modules/size/size.module';
 import { StoreModule } from './modules/store/store.module';
@@ -29,6 +30,7 @@ import { PrismaService } from './prisma/prisma.service';
     ImageModule,
     CategoryModule,
     SizeModule,
+    ColorModule,
   ],
   controllers: [AppController],
   providers: [

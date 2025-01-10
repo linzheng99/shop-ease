@@ -3,13 +3,13 @@ import { APP_GUARD } from '@nestjs/core';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { SizeController } from './size.controller';
-import { SizeService } from './size.service';
+import { ColorController } from './color.controller';
+import { ColorService } from './color.service';
 
 @Module({
-  controllers: [SizeController],
+  controllers: [ColorController],
   providers: [
-    SizeService,
+    ColorService,
     PrismaService,
     {
       provide: APP_GUARD,
@@ -17,4 +17,4 @@ import { SizeService } from './size.service';
     },
   ],
 })
-export class SizeModule {}
+export class ColorModule {}
