@@ -10,6 +10,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { BillboardModule } from './modules/billboard/billboard.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ImageModule } from './modules/image/image.module';
+import { SizeModule } from './modules/size/size.module';
 import { StoreModule } from './modules/store/store.module';
 import { UploadsModule } from './modules/uploads/uploads.module';
 import { UserModule } from './modules/user/user.module';
@@ -27,6 +28,7 @@ import { PrismaService } from './prisma/prisma.service';
     BillboardModule,
     ImageModule,
     CategoryModule,
+    SizeModule,
   ],
   controllers: [AppController],
   providers: [
