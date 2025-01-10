@@ -8,6 +8,7 @@ import { HttpExceptionFilter } from './common/exceptions/http-exception.filter';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { AuthModule } from './modules/auth/auth.module';
 import { BillboardModule } from './modules/billboard/billboard.module';
+import { CategoryModule } from './modules/category/category.module';
 import { ImageModule } from './modules/image/image.module';
 import { StoreModule } from './modules/store/store.module';
 import { UploadsModule } from './modules/uploads/uploads.module';
@@ -25,6 +26,7 @@ import { PrismaService } from './prisma/prisma.service';
     UploadsModule,
     BillboardModule,
     ImageModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [

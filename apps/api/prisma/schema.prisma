@@ -38,8 +38,11 @@ model Store {
   products    Product[]
   billboards  Billboard[]
   orders      Order[]
+  categories  Category[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+
+  @@index([userId])
 }
 
 model Product {
@@ -58,14 +61,21 @@ model Product {
   orderItems  OrderItem[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+
+  @@index([storeId])
+  @@index([categoryId])
 }
 
 model Category {
   id        String    @id @default(cuid())
   name      String
   products  Product[]
+  storeId   String
+  store     Store     @relation(fields: [storeId], references: [id])
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+
+  @@index([storeId])
 }
 
 model Billboard {
@@ -100,6 +110,8 @@ model Comment {
   product   Product  @relation(fields: [productId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([productId])
 }
 
 model Order {
@@ -113,6 +125,9 @@ model Order {
   orderItems OrderItem[]
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
+
+  @@index([userId])
+  @@index([storeId])
 }
 
 model OrderItem {
