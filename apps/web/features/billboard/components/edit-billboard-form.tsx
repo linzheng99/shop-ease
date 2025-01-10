@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import UploadImage from "@/components/upload-image";
+import UploadImage from "@/features/upload/components/upload-image";
 
 import { useEditBillboard } from "../api/use-edit-billboard";
 import { editBillboardSchema } from "../schemas";

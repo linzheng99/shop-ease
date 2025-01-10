@@ -5,11 +5,10 @@ import { XIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 
+import { Button } from '@/components/ui/button';
 import { useDeleteImage } from '@/features/upload/api/use-delete-image';
 import { useUploadImage } from '@/features/upload/api/use-upload-image';
 import { cn } from '@/lib/utils';
-
-import { Button } from './ui/button';
 
 interface UploadImageProps {
   className?: string;

@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import UploadImage from "@/components/upload-image";
+import UploadImage from "@/features/upload/components/upload-image"
 import { useStoreId } from "@/hooks/use-store-id";
 
 import { useCreateBillboard } from "../api/use-create-billboard";
