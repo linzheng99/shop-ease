@@ -48,24 +48,37 @@ model Store {
 }
 
 model Product {
-  id          String      @id @default(cuid())
-  name        String
-  description String
-  price       Float
-  storeId     String
-  store       Store       @relation(fields: [storeId], references: [id])
-  categoryId  String
-  category    Category    @relation(fields: [categoryId], references: [id])
-  sizes       Size[]
-  colors      Color[]
-  images      Image[]
-  comments    Comment[]
-  orderItems  OrderItem[]
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id              String           @id @default(cuid())
+  name            String
+  description     String
+  price           Float
+  storeId         String
+  store           Store            @relation(fields: [storeId], references: [id])
+  categoryId      String
+  category        Category         @relation(fields: [categoryId], references: [id])
+  productVariants ProductVariant[]
+  images          Image[]
+  comments        Comment[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
 
-  @@index([storeId])
-  @@index([categoryId])
+model ProductVariant {
+  id         String      @id @default(cuid())
+  productId  String
+  product    Product     @relation(fields: [productId], references: [id])
+  sizeId     String?
+  size       Size?       @relation(fields: [sizeId], references: [id])
+  colorId    String?
+  color      Color?      @relation(fields: [colorId], references: [id])
+  quantity   Int
+  orderItems OrderItem[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@index([productId])
+  @@index([sizeId])
+  @@index([colorId])
 }
 
 model Category {
@@ -94,7 +107,7 @@ model Billboard {
 model Image {
   id        String     @id @default(cuid())
   url       String
-  name      String?
+  name      String
   productId String?
   product   Product?   @relation(fields: [productId], references: [id])
   billboard Billboard?
@@ -114,6 +127,7 @@ model Comment {
   updatedAt DateTime @updatedAt
 
   @@index([productId])
+  @@index([userId])
 }
 
 model Order {
@@ -133,36 +147,36 @@ model Order {
 }
 
 model OrderItem {
-  id        String   @id @default(cuid())
-  orderId   String
-  order     Order    @relation(fields: [orderId], references: [id])
-  productId String
-  product   Product  @relation(fields: [productId], references: [id])
-  quantity  Int
-  price     Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id               String         @id @default(cuid())
+  orderId          String
+  order            Order          @relation(fields: [orderId], references: [id])
+  quantity         Int
+  price            Float
+  productVariantId String
+  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
 }
 
 model Size {
-  id        String    @id @default(cuid())
-  name      String
-  products  Product[]
-  storeId   String
-  store     Store     @relation(fields: [storeId], references: [id])
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id              String           @id @default(cuid())
+  name            String
+  storeId         String
+  store           Store            @relation(fields: [storeId], references: [id])
+  productVariants ProductVariant[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 }
 
 model Color {
-  id        String    @id @default(cuid())
-  name      String
-  value     String
-  products  Product[]
-  storeId   String
-  store     Store     @relation(fields: [storeId], references: [id])
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id              String           @id @default(cuid())
+  name            String
+  value           String
+  storeId         String
+  store           Store            @relation(fields: [storeId], references: [id])
+  productVariants ProductVariant[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 }
 
 enum OrderStatus {

@@ -11,6 +11,7 @@ import { BillboardModule } from './modules/billboard/billboard.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ColorModule } from './modules/color/color.module';
 import { ImageModule } from './modules/image/image.module';
+import { ProductModule } from './modules/product/product.module';
 import { SizeModule } from './modules/size/size.module';
 import { StoreModule } from './modules/store/store.module';
 import { UploadsModule } from './modules/uploads/uploads.module';
@@ -31,6 +32,7 @@ import { PrismaService } from './prisma/prisma.service';
     CategoryModule,
     SizeModule,
     ColorModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [
