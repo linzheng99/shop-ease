@@ -2,14 +2,14 @@ import { redirect } from "next/navigation";
 
 import { getSession } from "@/lib/session";
 
-import { ColorsClient } from "./client";
+import ProductsClient from "./client";
 
-export default async function ColorsPage() {
+export default async function ProductsPage() {
   const session = await getSession()
   if (!session) {
     return redirect('/login')
   }
-  return <ColorsClient />
-}
 
+  return <ProductsClient />;
+}
 
