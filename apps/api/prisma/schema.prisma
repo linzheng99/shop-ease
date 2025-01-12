@@ -22,11 +22,12 @@ model User {
   password           String
   hashedRefreshToken String?
   role               Role      @default(USER)
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
+  cart               Cart?
   stores             Store[]
   orders             Order[]
   comments           Comment[]
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
 }
 
 model Store {
@@ -73,6 +74,7 @@ model ProductVariant {
   color      Color?      @relation(fields: [colorId], references: [id])
   quantity   Int
   orderItems OrderItem[]
+  cartItems  CartItem[]
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
 
@@ -177,6 +179,31 @@ model Color {
   productVariants ProductVariant[]
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  userId    String     @unique
+  user      User       @relation(fields: [userId], references: [id])
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([userId])
+}
+
+model CartItem {
+  id               String         @id @default(cuid())
+  cartId           String
+  cart             Cart           @relation(fields: [cartId], references: [id])
+  quantity         Int
+  productVariantId String         @unique
+  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@index([cartId])
+  @@index([productVariantId])
 }
 
 enum OrderStatus {
