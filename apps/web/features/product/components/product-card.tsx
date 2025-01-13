@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 
 import { type ProductAllType } from "../types";
+import ProductActions from "./product-actions";
 
 interface ProductCardProps {
   product: ProductAllType;
@@ -18,7 +19,7 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
   );
 
   return (
-    <div onClick={onClick} className="border p-4 rounded-md flex flex-col gap-2 hover:shadow-md transition-all duration-300 cursor-pointer">
+    <div onClick={onClick} className="relative border p-4 rounded-md flex flex-col gap-2 hover:shadow-md transition-all duration-300 cursor-pointer">
       {imageUrl ? (
         <div className="w-full h-40 rounded-md overflow-hidden relative">
           <Image
@@ -47,6 +48,7 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
         }
       </div>
       <p className="text-lg font-semibold">${price}</p>
+      <ProductActions product={product} className="absolute right-2 bottom-2" />
     </div>
   )
 };
