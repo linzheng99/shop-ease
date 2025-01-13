@@ -1,3 +1,4 @@
+import { Image } from '@prisma/client';
 import { Type } from 'class-transformer';
 import {
   IsArray,
@@ -28,6 +29,10 @@ class ProductVariantDto {
 export class UpdateProductDto {
   @IsNotEmpty()
   @IsString()
+  id: string;
+
+  @IsNotEmpty()
+  @IsString()
   name: string;
 
   @IsNotEmpty()
@@ -47,9 +52,8 @@ export class UpdateProductDto {
   storeId: string;
 
   @IsArray()
-  @IsString()
   @IsOptional()
-  images: string[];
+  images: Image[];
 
   @IsArray()
   @ValidateNested({ each: true })

@@ -103,7 +103,7 @@ export class ProductService {
       data: {
         ...productData,
         images: {
-          connect: data?.images?.map((imageId) => ({ id: imageId })) || [],
+          connect: data?.images?.map((image) => ({ id: image.id })) || [],
         },
       },
     });
@@ -118,13 +118,19 @@ export class ProductService {
       if (variant.id) {
         return await this.prisma.productVariant.update({
           where: { id: variant.id },
-          data: variant,
+          data: {
+            ...variant,
+            colorId: variant.colorId || null,
+            sizeId: variant.sizeId || null,
+          },
         });
       } else {
         return await this.prisma.productVariant.create({
           data: {
             ...variant,
             productId,
+            colorId: variant.colorId || null,
+            sizeId: variant.sizeId || null,
           },
         });
       }
