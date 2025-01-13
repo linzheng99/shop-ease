@@ -54,7 +54,7 @@ model Product {
   description     String
   price           Float
   storeId         String
-  store           Store            @relation(fields: [storeId], references: [id])
+  store           Store            @relation(fields: [storeId], references: [id], onDelete: Cascade)
   categoryId      String
   category        Category         @relation(fields: [categoryId], references: [id])
   productVariants ProductVariant[]
@@ -67,7 +67,7 @@ model Product {
 model ProductVariant {
   id         String      @id @default(cuid())
   productId  String
-  product    Product     @relation(fields: [productId], references: [id])
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
   sizeId     String?
   size       Size?       @relation(fields: [sizeId], references: [id])
   colorId    String?
@@ -88,7 +88,7 @@ model Category {
   name      String
   products  Product[]
   storeId   String
-  store     Store     @relation(fields: [storeId], references: [id])
+  store     Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 
@@ -111,7 +111,7 @@ model Image {
   url       String
   name      String
   productId String?
-  product   Product?   @relation(fields: [productId], references: [id])
+  product   Product?   @relation(fields: [productId], references: [id], onDelete: Cascade)
   billboard Billboard?
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -124,7 +124,7 @@ model Comment {
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   productId String
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -149,15 +149,22 @@ model Order {
 }
 
 model OrderItem {
-  id               String         @id @default(cuid())
+  id               String          @id @default(cuid())
   orderId          String
-  order            Order          @relation(fields: [orderId], references: [id])
+  order            Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
   quantity         Int
   price            Float
-  productVariantId String
-  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
+  productName      String
+  variantSize      String?
+  variantColor     String?
+  colorValue       String?
+  productVariantId String?
+  productVariant   ProductVariant? @relation(fields: [productVariantId], references: [id])
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  @@index([orderId])
+  @@index([productVariantId])
 }
 
 model Size {
@@ -195,10 +202,10 @@ model Cart {
 model CartItem {
   id               String         @id @default(cuid())
   cartId           String
-  cart             Cart           @relation(fields: [cartId], references: [id])
+  cart             Cart           @relation(fields: [cartId], references: [id], onDelete: Cascade)
   quantity         Int
   productVariantId String         @unique
-  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
+  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id], onDelete: Cascade)
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
 

@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 import { CreateProductDto } from './dto/create-product.dto';
@@ -160,6 +164,13 @@ export class ProductService {
 
     if (!store) {
       throw new UnauthorizedException('Store not found');
+    }
+    const product = await this.prisma.product.findUnique({
+      where: { id: productId },
+    });
+
+    if (!product) {
+      throw new NotFoundException('Product not found');
     }
 
     return await this.prisma.product.delete({
