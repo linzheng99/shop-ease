@@ -181,7 +181,7 @@ export default function VariantSelector({ productVariants, productId }: VariantS
       <Button
         onClick={handleAddToCart}
         variant="amber"
-        className="w-fit rounded-full mt-auto ml-auto"
+        className="rounded-full mt-auto ml-auto px-10"
         disabled={isPending}
       >
         {isPending ? 'Adding...' : 'Add to Cart'}

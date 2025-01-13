@@ -29,19 +29,19 @@ import { type BillboardWithImageType } from "../types";
 
 interface EditBillboardFormProps {
   onClose: () => Promise<void>
-  billboard: BillboardWithImageType
+  defaultValues: BillboardWithImageType
 }
 
-export default function EditBillboardForm({ onClose, billboard }: EditBillboardFormProps) {
+export default function EditBillboardForm({ onClose, defaultValues }: EditBillboardFormProps) {
   const { mutate: editBillboard, isPending } = useEditBillboard()
 
   const form = useForm<z.infer<typeof editBillboardSchema>>({
     resolver: zodResolver(editBillboardSchema),
-    defaultValues: billboard,
+    defaultValues,
   })
 
   function onSubmit(values: z.infer<typeof editBillboardSchema>) {
-    editBillboard({ json: values, params: { id: billboard.id } }, {
+    editBillboard({ json: values, params: { id: defaultValues.id } }, {
       onSuccess: async () => {
         form.reset()
         await onClose()
@@ -83,7 +83,7 @@ export default function EditBillboardForm({ onClose, billboard }: EditBillboardF
                 <FormItem>
                   <FormLabel>Image</FormLabel>
                   <FormControl>
-                    <UploadImage onChange={field.onChange} defaultValue={billboard?.image} />
+                    <UploadImage onChange={field.onChange} defaultValue={defaultValues?.image} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -91,7 +91,7 @@ export default function EditBillboardForm({ onClose, billboard }: EditBillboardF
             />
             <div className="flex justify-end gap-4">
               <Button type="button" variant="outline" onClick={onCancel} disabled={isPending}>Cancel</Button>
-              <Button type="submit" disabled={isPending}>Create</Button>
+              <Button type="submit" disabled={isPending}>Update</Button>
             </div>
           </form>
         </Form>

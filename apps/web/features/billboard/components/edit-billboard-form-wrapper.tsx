@@ -32,6 +32,6 @@ export default function EditBillboardFormWrapper({ id, onClose }: EditBillboardF
   if (!billboard) return null
 
   return (
-    <EditBillboardForm billboard={billboard} onClose={onClose} />
+    <EditBillboardForm defaultValues={billboard} onClose={onClose} />
   )
 }
