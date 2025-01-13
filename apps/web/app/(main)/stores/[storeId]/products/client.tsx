@@ -1,5 +1,7 @@
 "use client"
 
+import { useRouter } from "next/navigation";
+
 import PageLoader from "@/components/page-loader";
 import { Button } from "@/components/ui/button";
 import { useGetProducts } from "@/features/product/api/use-get-products";
@@ -9,6 +11,7 @@ import { useStoreId } from "@/hooks/use-store-id";
 
 export default function ProductsClient() {
   const storeId = useStoreId()
+  const router = useRouter()
   const { data, isLoading } = useGetProducts(storeId)
   const { onOpen } = useProductModal()
 
@@ -27,7 +30,11 @@ export default function ProductsClient() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {data?.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              onClick={() => router.push(`/stores/${storeId}/products/${product.id}`)}
+            />
           ))}
         </div>
       )}

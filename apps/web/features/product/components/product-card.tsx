@@ -6,18 +6,19 @@ import { type ProductAllType } from "../types";
 
 interface ProductCardProps {
   product: ProductAllType;
+  onClick?: () => void;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, onClick }: ProductCardProps) {
   const { name, price, images, category, description, productVariants } = product;
   const imageUrl = images?.[0]?.url;
 
   const uniqueColorVariants = Array.from(
-    new Map(productVariants.map(variant => [variant.color.id, variant])).values()
+    new Map(productVariants.filter(variant => !!variant.colorId).map(variant => [variant.color.id, variant])).values()
   );
 
   return (
-    <div className="border p-4 rounded-md flex flex-col gap-2 hover:shadow-md transition-all duration-300 cursor-pointer">
+    <div onClick={onClick} className="border p-4 rounded-md flex flex-col gap-2 hover:shadow-md transition-all duration-300 cursor-pointer">
       {imageUrl ? (
         <div className="w-full h-40 rounded-md overflow-hidden relative">
           <Image

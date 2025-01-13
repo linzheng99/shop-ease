@@ -11,7 +11,7 @@ export const useGetProduct = (id: string) => {
   const query = useQuery<ProductAllType, Error>({
     queryKey: ['product', id],
     queryFn: async () => {
-      const response = await apiClient.get<ResponseType>(`/product/detail/${id}`)
+      const response = await apiClient.get<ResponseType>(`/product/${id}`)
       return response.data
     },
   })
