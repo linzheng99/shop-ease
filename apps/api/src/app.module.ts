@@ -17,6 +17,7 @@ import { StoreModule } from './modules/store/store.module';
 import { UploadsModule } from './modules/uploads/uploads.module';
 import { UserModule } from './modules/user/user.module';
 import { PrismaService } from './prisma/prisma.service';
+import { CartModule } from './modules/cart/cart.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { PrismaService } from './prisma/prisma.service';
     SizeModule,
     ColorModule,
     ProductModule,
+    CartModule,
   ],
   controllers: [AppController],
   providers: [
