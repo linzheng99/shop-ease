@@ -3,10 +3,10 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Instrument_Sans } from "next/font/google";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
-import { Toaster } from "sonner";
 
 import QueryProvider from "@/components/query-provider";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const sansSerif = Instrument_Sans({ subsets: ["latin"] });
 
