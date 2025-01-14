@@ -1,6 +1,7 @@
 
 import UserButton from "@/features/auth/components/user-button"
 import CartSign from "@/features/cart/components/cart-sign"
+import OrderSign from "@/features/order/components/order-sign"
 import StoreSign from "@/features/store/components/store-sign"
 
 import Logo from "./logo"
@@ -14,6 +15,7 @@ export default function Navbar() {
       <div className="flex items-center gap-4">
         <StoreSign />
         <CartSign />
+        <OrderSign />
         <ModeToggle />
         <UserButton />
       </div>
