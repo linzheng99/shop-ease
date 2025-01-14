@@ -10,6 +10,7 @@ import { useClearCart } from "@/features/cart/api/use-clear-cart"
 import { useGetCart } from "@/features/cart/api/use-get-cart"
 import CartItem from "@/features/cart/components/cart-item"
 import CartSummary from "@/features/cart/components/cart-summary"
+import StripeCheckout from "@/features/stripe/components/stripe-checkout"
 
 export default function CartClient() {
   const { data, isLoading } = useGetCart()
@@ -38,7 +39,7 @@ export default function CartClient() {
         </div>
         <div className="mt-8 lg:col-span-4 lg:mt-0 bg-gray-50 rounded-lg px-4 sm:px-6 lg:px-6 py-4">
           <CartSummary data={items} />
-          <Button className="w-full mt-4">Checkout</Button>
+          <StripeCheckout ids={items.map((item) => item.id)} />
         </div>
       </div>
     </div>
