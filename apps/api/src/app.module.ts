@@ -8,16 +8,18 @@ import { HttpExceptionFilter } from './common/exceptions/http-exception.filter';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { AuthModule } from './modules/auth/auth.module';
 import { BillboardModule } from './modules/billboard/billboard.module';
+import { CartModule } from './modules/cart/cart.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ColorModule } from './modules/color/color.module';
 import { ImageModule } from './modules/image/image.module';
+import { OrderModule } from './modules/order/order.module';
 import { ProductModule } from './modules/product/product.module';
 import { SizeModule } from './modules/size/size.module';
 import { StoreModule } from './modules/store/store.module';
+import { StripeModule } from './modules/stripe/stripe.module';
 import { UploadsModule } from './modules/uploads/uploads.module';
 import { UserModule } from './modules/user/user.module';
 import { PrismaService } from './prisma/prisma.service';
-import { CartModule } from './modules/cart/cart.module';
 
 @Module({
   imports: [
@@ -35,6 +37,8 @@ import { CartModule } from './modules/cart/cart.module';
     ColorModule,
     ProductModule,
     CartModule,
+    StripeModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [

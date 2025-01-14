@@ -139,6 +139,8 @@ model Order {
   storeId    String
   store      Store       @relation(fields: [storeId], references: [id])
   status     OrderStatus @default(PENDING)
+  expiresAt  DateTime
+  paymentUrl String?     @db.VarChar(2048)
   totalPrice Float
   orderItems OrderItem[]
   createdAt  DateTime    @default(now())
@@ -154,6 +156,7 @@ model OrderItem {
   order            Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
   quantity         Int
   price            Float
+  totalPrice       Float
   productName      String
   variantSize      String?
   variantColor     String?
