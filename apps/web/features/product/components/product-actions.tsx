@@ -1,5 +1,5 @@
 
-import { MoreVertical } from "lucide-react"
+import { MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -40,7 +40,7 @@ export default function ProductActions({ className, product }: ProductActionsPro
       <DropdownMenuTrigger asChild className={cn("hover:bg-transparent hover:text-amber-600", className)}>
         <Button className="h-8 w-8 p-0" variant="ghost">
           <span className="sr-only">Open menu</span>
-          <MoreVertical className="h-4 w-4" />
+          <MoreHorizontal className="h-5 w-5" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

@@ -7,7 +7,8 @@ import { getSession, updateSession } from "./session";
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
 interface RequestConfig extends RequestInit {
-  params?: Record<string, string>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  params?: Record<string, any>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
 }

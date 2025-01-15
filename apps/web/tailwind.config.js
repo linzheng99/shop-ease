@@ -2,9 +2,9 @@
 export default {
 	darkMode: ["class"],
 	content: [
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./features/**/*.{js,ts,jsx,tsx,mdx}",
+		"./components/**/*.{js,ts,jsx,tsx,mdx}",
+		"./app/**/*.{js,ts,jsx,tsx,mdx}",
+		"./features/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
 		extend: {
@@ -65,8 +65,30 @@ export default {
 					'700': '#bb6902',
 					'800': '#985108',
 					'900': '#7c420b',
-					'950': '#482200',
+					'950': '#482200'
+				}
+			},
+			keyframes: {
+				'accordion-down': {
+					from: {
+						height: '0'
+					},
+					to: {
+						height: 'var(--radix-accordion-content-height)'
+					}
 				},
+				'accordion-up': {
+					from: {
+						height: 'var(--radix-accordion-content-height)'
+					},
+					to: {
+						height: '0'
+					}
+				}
+			},
+			animation: {
+				'accordion-down': 'accordion-down 0.2s ease-out',
+				'accordion-up': 'accordion-up 0.2s ease-out'
 			}
 		}
 	},
