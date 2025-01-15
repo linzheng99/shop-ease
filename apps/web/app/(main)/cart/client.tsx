@@ -37,7 +37,7 @@ export default function CartClient() {
             <CartItem key={item.id} data={item} />
           ))}
         </div>
-        <div className="mt-8 lg:col-span-4 lg:mt-0 bg-gray-50 rounded-lg px-4 sm:px-6 lg:px-6 py-4">
+        <div className="mt-8 lg:col-span-4 lg:mt-0 bg-muted-foreground/10 rounded-lg px-4 sm:px-6 lg:px-6 py-4">
           <CartSummary data={items} />
           <StripeCheckout ids={items.map((item) => item.id)} />
         </div>

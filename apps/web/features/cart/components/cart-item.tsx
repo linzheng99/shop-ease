@@ -63,7 +63,7 @@ export default function CartItem({ data }: { data: CartItemWithVariant }) {
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex justify-between">
-            <p className="text-lg font-semibold text-black truncate">
+            <p className="text-lg font-semibold truncate">
               {name}
             </p>
           </div>

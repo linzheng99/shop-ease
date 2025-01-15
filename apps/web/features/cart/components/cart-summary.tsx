@@ -18,7 +18,7 @@ export default function CartSummary({ data }: CartSummaryProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-xl font-bold mb-4">Order Summary</h2>
+      <h2 className="text-xl font-bold mb-4 text-primary">Order Summary</h2>
       <Separator />
       <div className="flex justify-between items-center">
         <span className="text-lg font-semibold">Total</span>
