@@ -48,7 +48,18 @@ export class StoreService {
     const store = await this.prisma.store.findUnique({
       where: { id },
       include: {
-        products: true,
+        products: {
+          include: {
+            category: true,
+            images: true,
+            productVariants: {
+              include: {
+                color: true,
+                size: true,
+              },
+            },
+          },
+        },
       },
     });
 

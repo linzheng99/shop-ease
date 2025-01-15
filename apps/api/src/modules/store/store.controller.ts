@@ -11,17 +11,20 @@ export class StoreController {
 
   @Public()
   @Get('list')
-  getStores() {
-    return this.storeService.getStores();
+  async getStores() {
+    return await this.storeService.getStores();
   }
 
   @Post('create')
-  createStore(@Body() body: CreateStoreDto, @Request() req: { user: User }) {
-    return this.storeService.createStore(body, req.user.id);
+  async createStore(
+    @Body() body: CreateStoreDto,
+    @Request() req: { user: User },
+  ) {
+    return await this.storeService.createStore(body, req.user.id);
   }
 
   @Get(':id')
-  getStore(@Param('id') id: string) {
-    return this.storeService.getStoreById(id);
+  async getStore(@Param('id') id: string) {
+    return await this.storeService.getStoreById(id);
   }
 }

@@ -6,6 +6,7 @@ import {
 import { PrismaService } from 'src/prisma/prisma.service';
 
 import { CreateProductDto } from './dto/create-product.dto';
+import { FilterProductsDto } from './dto/filter-products.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
@@ -26,6 +27,56 @@ export class ProductService {
         },
       },
     });
+  }
+
+  async filterProducts(filterDto: FilterProductsDto) {
+    const { storeId, categoryIds, colorIds, sizeIds } = filterDto;
+
+    const whereConditions = {
+      storeId,
+      ...(categoryIds?.length > 0 && {
+        categoryId: {
+          in: categoryIds,
+        },
+      }),
+      ...(colorIds?.length > 0 || sizeIds?.length > 0
+        ? {
+            productVariants: {
+              some: {
+                ...(colorIds?.length > 0 && {
+                  colorId: {
+                    in: colorIds,
+                  },
+                }),
+                ...(sizeIds?.length > 0 && {
+                  sizeId: {
+                    in: sizeIds,
+                  },
+                }),
+              },
+            },
+          }
+        : {}),
+    };
+
+    const products = await this.prisma.product.findMany({
+      where: whereConditions,
+      include: {
+        category: true,
+        images: true,
+        productVariants: {
+          include: {
+            size: true,
+            color: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    return products;
   }
 
   async getProduct(productId: string) {

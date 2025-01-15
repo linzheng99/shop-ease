@@ -6,11 +6,13 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Request,
 } from '@nestjs/common';
 import { User } from '@prisma/client';
 
 import { CreateProductDto } from './dto/create-product.dto';
+import { FilterProductsDto } from './dto/filter-products.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductService } from './product.service';
 
@@ -21,6 +23,11 @@ export class ProductController {
   @Get('list/:storeId')
   async getProducts(@Param('storeId') storeId: string) {
     return this.productService.getProducts(storeId);
+  }
+
+  @Get('filter')
+  async filterProducts(@Query() filterDto: FilterProductsDto) {
+    return this.productService.filterProducts(filterDto);
   }
 
   @Post('create')
