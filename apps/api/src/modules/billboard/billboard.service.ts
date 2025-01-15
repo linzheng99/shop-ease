@@ -27,6 +27,13 @@ export class BillboardService {
     });
   }
 
+  async searchBillboards(storeId: string, isFeatured: boolean) {
+    return await this.prisma.billboard.findMany({
+      where: { storeId, isFeatured },
+      include: { image: true },
+    });
+  }
+
   async createBillboard(data: CreateBillboardDto) {
     return await this.prisma.billboard.create({
       data,
@@ -66,6 +73,30 @@ export class BillboardService {
     return await this.prisma.billboard.update({
       where: { id },
       data: body,
+    });
+  }
+
+  async toggleFeatured(id: string) {
+    const billboard = await this.prisma.billboard.findUnique({
+      where: { id },
+    });
+
+    if (!billboard) {
+      throw new NotFoundException('Billboard not found');
+    }
+
+    // close other featured billboards
+    await this.prisma.billboard.updateMany({
+      where: {
+        isFeatured: true,
+        NOT: { id },
+      },
+      data: { isFeatured: false },
+    });
+
+    return await this.prisma.billboard.update({
+      where: { id },
+      data: { isFeatured: !billboard.isFeatured },
     });
   }
 }

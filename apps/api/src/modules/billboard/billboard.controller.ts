@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Request,
 } from '@nestjs/common';
 
@@ -25,6 +26,14 @@ export class BillboardController {
     return await this.billboardService.getBillboards(req.user.id, storeId);
   }
 
+  @Get('/:storeId/featured')
+  async searchBillboards(
+    @Param('storeId') storeId: string,
+    @Query('isFeatured') isFeatured: boolean,
+  ) {
+    return await this.billboardService.searchBillboards(storeId, isFeatured);
+  }
+
   @Post('create')
   async createBillboard(@Body() body: CreateBillboardDto) {
     return await this.billboardService.createBillboard(body);
@@ -42,6 +51,11 @@ export class BillboardController {
     @Body() body: EditBillboardDto,
   ) {
     return await this.billboardService.editBillboard(req.user.id, id, body);
+  }
+
+  @Patch('featured/:id')
+  async toggleFeatured(@Param('id') id: string) {
+    return await this.billboardService.toggleFeatured(id);
   }
 
   @Delete(':id')
