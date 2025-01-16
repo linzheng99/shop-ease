@@ -1,14 +1,5 @@
-import { redirect } from "next/navigation";
-
-import { getSession } from "@/lib/session";
-
 import StoreIdPageClient from "./client";
 
-export default async function StoreIdPage() {
-  const session = await getSession()
-  if (!session) {
-    return redirect('/login')
-  }
-
+export default function StoreIdPage() {
   return <StoreIdPageClient />;
 }

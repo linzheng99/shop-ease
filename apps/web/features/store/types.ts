@@ -1,3 +1,4 @@
+import { type BillboardWithImageType } from "../billboard/types";
 import { type ProductAllType } from "../product/types";
 
 export type StoreType = {
@@ -11,4 +12,5 @@ export type StoreType = {
 
 export type StoreWithProducts = StoreType & {
   products: ProductAllType[];
+  billboards?: BillboardWithImageType[];
 }

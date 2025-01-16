@@ -12,7 +12,31 @@ export class StoreService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getStores() {
-    return await this.prisma.store.findMany();
+    return await this.prisma.store.findMany({
+      include: {
+        billboards: {
+          where: {
+            isFeatured: true,
+          },
+          include: {
+            image: true,
+          },
+          take: 1,
+        },
+        products: {
+          include: {
+            images: true,
+            category: true,
+            productVariants: {
+              include: {
+                color: true,
+                size: true,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
   async createStore(data: CreateStoreDto, userId: string) {
