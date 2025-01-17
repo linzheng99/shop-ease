@@ -49,7 +49,7 @@ export async function getSession() {
     return payload as Session
   } catch (error) {
     console.error('session verify error', error)
-    redirect('/auth/sign-in')
+    redirect('/sign-in')
   }
 }
 

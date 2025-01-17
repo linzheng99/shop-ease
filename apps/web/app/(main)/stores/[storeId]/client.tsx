@@ -15,8 +15,9 @@ import { useGetSizes } from "@/features/size/api/use-get-sizes";
 import { useGetStore } from "@/features/store/api/use-get-store";
 import StoreActions from "@/features/store/components/store-actions";
 import { useStoreId } from "@/hooks/use-store-id";
+import { type Session } from "@/lib/session";
 
-export default function StoreIdPageClient() {
+export default function StoreIdPageClient({ session }: { session: Session | null }) {
   const storeId = useStoreId()
   const { data: store, isLoading } = useGetStore(storeId)
   const { data: billboards, isLoading: isBillboardsLoading } = useSearchBillboards(storeId, { isFeatured: true })
@@ -26,6 +27,8 @@ export default function StoreIdPageClient() {
 
   if (isLoading || isBillboardsLoading || isCategoriesLoading || isSizesLoading || isColorsLoading) return <PageLoader />
   if (!store) return <PageError message="Store not found" />
+
+  const isMaster = store.userId === session?.user.id
 
   const categoryCheckboxes = categories?.map(category => ({
     id: category.id,
@@ -45,8 +48,14 @@ export default function StoreIdPageClient() {
 
   return (
     <div className="h-full flex flex-col gap-4">
-      <StoreActions storeId={storeId} />
-      <Separator />
+      {session && isMaster &&
+        (
+          <>
+            <StoreActions storeId={storeId} />
+            <Separator />
+          </>
+        )
+      }
       <div className="flex flex-col items-center gap-2">
         <div className="text-3xl md:text-4xl font-bold">{store.name}</div>
         <div className="text-gray-500">{store.description}</div>
