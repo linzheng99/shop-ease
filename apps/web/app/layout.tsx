@@ -5,6 +5,7 @@ import { Instrument_Sans } from "next/font/google";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 import QueryProvider from "@/components/query-provider";
+import { SearchParamsWrapper } from "@/components/search-params-wrapper";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -32,7 +33,9 @@ export default function RootLayout({
           <QueryProvider>
             <Toaster />
             <NuqsAdapter>
-              {children}
+              <SearchParamsWrapper>
+                {children}
+              </SearchParamsWrapper>
             </NuqsAdapter>
           </QueryProvider>
         </ThemeProvider>
