@@ -24,7 +24,7 @@ export default function Client() {
           </div>
         ) : (
           data?.slice(0, 3).map((store) => (
-            <div key={store.id} className="w-full grid grid-cols-4 gap-4">
+            <div key={store.id} className="w-full grid grid-cols-4 gap-4 border p-4 rounded-lg">
               <div className='w-full flex flex-col gap-4 col-span-2'>
                 <div className='flex justify-between items-center'>
                   <h1 className='text-2xl font-bold'>{store.name}</h1>
@@ -47,7 +47,7 @@ export default function Client() {
               </div>
               <div className='w-full flex gap-4 col-span-4'>
                 {store.products?.slice(0, 4).map((product) => (
-                  <ProductInfo key={product.id} product={product} />
+                  <ProductInfo key={product.id} product={product} onClick={() => router.push(`/stores/${store.id}/products/${product.id}`)} />
                 ))}
               </div>
             </div>

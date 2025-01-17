@@ -1,4 +1,5 @@
 import { type CheckedState } from "@radix-ui/react-checkbox";
+import { useRouter } from "next/navigation";
 
 import PageLoader from "@/components/page-loader";
 import {
@@ -22,6 +23,7 @@ interface ProductFiltersProps {
 }
 
 export default function ProductFilters({ storeId, categoryCheckboxes, sizeCheckboxes, colorCheckboxes }: ProductFiltersProps) {
+  const router = useRouter()
   const { values, setValues } = useProductFilterStore()
   const { data: products, isLoading } = useFilterProducts({
     storeId,
@@ -97,7 +99,7 @@ export default function ProductFilters({ storeId, categoryCheckboxes, sizeCheckb
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {
               products?.map((product) => (
-                <ProductInfo key={product.id} product={product} />
+                <ProductInfo key={product.id} product={product} onClick={() => router.push(`/stores/${storeId}/products/${product.id}`)} />
               ))
             }
           </div>
