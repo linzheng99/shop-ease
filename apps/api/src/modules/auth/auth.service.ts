@@ -61,6 +61,7 @@ export class AuthService {
     const hashedRefreshToken = await hash(refreshToken);
 
     // TODO: add roles when local strategy returns user
+    console.log('login', user);
 
     await this.userService.updateHashedRefreshToken(
       user.id,
@@ -72,6 +73,7 @@ export class AuthService {
         id: user.id,
         email: user.email,
         name: user.name,
+        role: user.role,
       },
       accessToken,
       refreshToken,
@@ -102,6 +104,7 @@ export class AuthService {
   async validateJwtUser(userId: string) {
     // TODO: add roles when jwt strategy returns user
     const user = await this.userService.findById(userId);
+    console.log('validateJwtUser', user);
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
@@ -115,6 +118,7 @@ export class AuthService {
 
   // refresh jwt strategy validate user
   async validateRefreshToken(userId: string, refreshToken: string) {
+    console.log('validateRefreshToken', userId, refreshToken);
     // TODO: add roles when refresh jwt strategy returns user
     const user = await this.userService.findById(userId);
     if (!user) {
@@ -157,6 +161,7 @@ export class AuthService {
   }
 
   async signout(user: User) {
+    console.log('signout', user);
     return await this.userService.updateHashedRefreshToken(user.id, null);
   }
 

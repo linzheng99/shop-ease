@@ -8,6 +8,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { User } from '@prisma/client';
+import { Public } from 'src/common/decorators/public-decorator';
 
 import { CreateSizeDto } from './dto/create-size.dto';
 import { SizeService } from './size.service';
@@ -21,9 +22,10 @@ export class SizeController {
     return this.sizeService.createSize(req.user.id, body);
   }
 
+  @Public()
   @Get('list/:storeId')
-  getSizes(@Request() req: { user: User }, @Param('storeId') storeId: string) {
-    return this.sizeService.getSizes(req.user.id, storeId);
+  getSizes(@Param('storeId') storeId: string) {
+    return this.sizeService.getSizes(storeId);
   }
 
   @Delete(':storeId/:id')

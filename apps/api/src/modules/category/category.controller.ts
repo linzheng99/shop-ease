@@ -8,6 +8,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { User } from '@prisma/client';
+import { Public } from 'src/common/decorators/public-decorator';
 
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -21,12 +22,10 @@ export class CategoryController {
     return this.categoryService.createCategory(req.user.id, body);
   }
 
+  @Public()
   @Get('list/:storeId')
-  getCategories(
-    @Request() req: { user: User },
-    @Param('storeId') storeId: string,
-  ) {
-    return this.categoryService.getCategories(req.user.id, storeId);
+  getCategories(@Param('storeId') storeId: string) {
+    return this.categoryService.getCategories(storeId);
   }
 
   @Delete(':storeId/:id')

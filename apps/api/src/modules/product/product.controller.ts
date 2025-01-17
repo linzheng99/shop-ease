@@ -10,6 +10,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { User } from '@prisma/client';
+import { Public } from 'src/common/decorators/public-decorator';
 
 import { CreateProductDto } from './dto/create-product.dto';
 import { FilterProductsDto } from './dto/filter-products.dto';
@@ -20,11 +21,13 @@ import { ProductService } from './product.service';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @Public()
   @Get('list/:storeId')
   async getProducts(@Param('storeId') storeId: string) {
     return this.productService.getProducts(storeId);
   }
 
+  @Public()
   @Get('filter')
   async filterProducts(@Query() filterDto: FilterProductsDto) {
     return this.productService.filterProducts(filterDto);
@@ -38,6 +41,7 @@ export class ProductController {
     return this.productService.createProduct(req.user.id, createProductDto);
   }
 
+  @Public()
   @Get(':productId')
   async getProduct(@Param('productId') productId: string) {
     return this.productService.getProduct(productId);

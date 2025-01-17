@@ -9,6 +9,7 @@ import {
   Query,
   Request,
 } from '@nestjs/common';
+import { Public } from 'src/common/decorators/public-decorator';
 
 import { BillboardService } from './billboard.service';
 import { CreateBillboardDto } from './dto/create-billboard.dto';
@@ -18,6 +19,7 @@ import { EditBillboardDto } from './dto/edit-billboard.dto';
 export class BillboardController {
   constructor(private readonly billboardService: BillboardService) {}
 
+  @Public()
   @Get('list/:storeId')
   async getBillboards(
     @Request() req: { user: { id: string } },
@@ -26,6 +28,7 @@ export class BillboardController {
     return await this.billboardService.getBillboards(req.user.id, storeId);
   }
 
+  @Public()
   @Get('/:storeId/featured')
   async searchBillboards(
     @Param('storeId') storeId: string,

@@ -25,9 +25,9 @@ export class SizeService {
     });
   }
 
-  async getSizes(userId: string, storeId: string) {
+  async getSizes(storeId: string) {
     const store = await this.prisma.store.findUnique({
-      where: { userId, id: storeId },
+      where: { id: storeId },
     });
 
     if (!store) {

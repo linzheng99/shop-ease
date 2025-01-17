@@ -25,9 +25,9 @@ export class ColorService {
     });
   }
 
-  async getColors(userId: string, storeId: string) {
+  async getColors(storeId: string) {
     const store = await this.prisma.store.findUnique({
-      where: { userId, id: storeId },
+      where: { id: storeId },
     });
 
     if (!store) {

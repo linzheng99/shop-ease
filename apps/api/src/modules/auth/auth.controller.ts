@@ -43,7 +43,6 @@ export class AuthController {
     return this.authService.refreshToken(req.user);
   }
 
-  @Public()
   @Post('signout')
   async signout(@Request() req: { user: User }) {
     return this.authService.signout(req.user);

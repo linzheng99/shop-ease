@@ -23,6 +23,7 @@ export class StoreController {
     return await this.storeService.createStore(body, req.user.id);
   }
 
+  @Public()
   @Get(':id')
   async getStore(@Param('id') id: string) {
     return await this.storeService.getStoreById(id);
