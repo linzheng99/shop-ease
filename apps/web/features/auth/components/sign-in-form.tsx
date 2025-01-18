@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { type z } from "zod"
 
@@ -26,6 +27,7 @@ import { useSignin } from "../api/use-signin"
 import { signInSchema } from "../schemas"
 
 export function SignInForm() {
+  const router = useRouter()
   const { mutate, isPending } = useSignin()
 
   const form = useForm<z.infer<typeof signInSchema>>({
@@ -37,7 +39,11 @@ export function SignInForm() {
   })
 
   function onSubmit(values: z.infer<typeof signInSchema>) {
-    mutate({ json: values })
+    mutate({ json: values }, {
+      onSuccess: () => {
+        router.refresh()
+      }
+    })
   }
 
   return (
