@@ -40,6 +40,11 @@ services:
       - NEXT_PUBLIC_API_URL=http://api:4000
       - PORT=${PORT}
       - SESSION_SECRET_KEY=${SESSION_SECRET_KEY}
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
     networks:
       - app-network
 
