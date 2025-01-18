@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { hash } from 'argon2';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -36,6 +36,14 @@ export class UserService {
     id: string,
     hashedRefreshToken: string | null,
   ) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
     return await this.prisma.user.update({
       where: { id },
       data: { hashedRefreshToken },

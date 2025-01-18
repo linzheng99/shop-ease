@@ -28,7 +28,7 @@ export const useSignin = () => {
         accessToken,
         refreshToken,
       })
-      router.push('/')
+      router.refresh()
       toast.success('Sign in success!')
     },
     onError: ({ message }) => {

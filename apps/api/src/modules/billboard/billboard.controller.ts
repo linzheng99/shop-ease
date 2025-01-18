@@ -19,7 +19,6 @@ import { EditBillboardDto } from './dto/edit-billboard.dto';
 export class BillboardController {
   constructor(private readonly billboardService: BillboardService) {}
 
-  @Public()
   @Get('list/:storeId')
   async getBillboards(
     @Request() req: { user: { id: string } },

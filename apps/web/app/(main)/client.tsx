@@ -47,7 +47,7 @@ export default function Client() {
               </div>
               <div className='w-full flex gap-4 col-span-4'>
                 {store.products?.slice(0, 4).map((product) => (
-                  <ProductInfo key={product.id} product={product} onClick={() => router.push(`/stores/${store.id}/products/${product.id}`)} />
+                  <ProductInfo key={product.id} product={product} className='w-1/4' onClick={() => router.push(`/stores/${store.id}/products/${product.id}`)} />
                 ))}
               </div>
             </div>

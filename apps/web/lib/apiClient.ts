@@ -130,7 +130,7 @@ apiClient.setResponseInterceptor(async (response) => {
   if (response.status === 401) {
     const session = await getSession();
     if (!session?.refreshToken) {
-      redirect('/auth/signin');
+      redirect('/sign-in');
     }
     try {
       const { accessToken, refreshToken } = await generateNewToken(session.refreshToken);
@@ -146,7 +146,7 @@ apiClient.setResponseInterceptor(async (response) => {
       });
     } catch (error) {
       console.error('Token refresh failed:', error);
-      redirect('/auth/signin');
+      redirect('/sign-in');
     }
   }
   return response;
