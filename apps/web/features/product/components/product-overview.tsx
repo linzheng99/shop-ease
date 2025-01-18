@@ -1,13 +1,15 @@
 import { type ProductAllType } from "@/features/product/types"
+import { type Session } from "@/lib/session"
 
 import { ProductPreview } from "./product-preview"
 import VariantSelector from "./variant-selector"
 
 interface ProductOverviewProps {
   product: ProductAllType
+  session: Session | null
 }
 
-export function ProductOverview({ product }: ProductOverviewProps) {
+export function ProductOverview({ product, session }: ProductOverviewProps) {
   const { name, description, productVariants, images, price } = product
 
   return (
@@ -29,7 +31,7 @@ export function ProductOverview({ product }: ProductOverviewProps) {
         <span className="font-bold text-3xl mt-4 md:mt-0">{name}</span>
         <p className="text-[16px] text-muted-foreground mb-5">{description}</p>
         <span className="text-xl font-semibold">$ {price}</span>
-        <VariantSelector productVariants={productVariants} productId={product.id} />
+        <VariantSelector productVariants={productVariants} productId={product.id} session={session} />
       </div>
     </div>
   )

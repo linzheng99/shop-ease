@@ -5,6 +5,7 @@ import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import { useAddToCart } from "@/features/cart/api/use-add-to-cart"
+import { type Session } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
 import useSelectProductModal from "../hooks/use-select-product-modal"
@@ -13,8 +14,9 @@ import { type ProductVariantType } from "../types"
 interface VariantSelectorProps {
   productVariants: ProductVariantType[]
   productId: string
+  session: Session | null
 }
-export default function VariantSelector({ productVariants, productId }: VariantSelectorProps) {
+export default function VariantSelector({ productVariants, productId, session }: VariantSelectorProps) {
   const { isSelect, changeSelect } = useSelectProductModal()
   const { mutate: addToCart, isPending } = useAddToCart()
   const [availableColors, setAvailableColors] = useState<Set<string | null>>(new Set())
@@ -73,6 +75,9 @@ export default function VariantSelector({ productVariants, productId }: VariantS
   }
 
   const handleAddToCart = () => {
+    if (!session) {
+      return toast.error('Please sign in to add to cart')
+    }
     let variant: ProductVariantType | undefined
 
     if (!hasColors && !hasSizes) {
