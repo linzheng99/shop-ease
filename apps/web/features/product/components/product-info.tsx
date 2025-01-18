@@ -1,15 +1,17 @@
 import Image from "next/image";
 
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 import { type ProductAllType } from "../types";
 
 interface ProductInfoProps {
   product: ProductAllType
+  className?: string
   onClick?: () => void
 }
 
-export default function ProductInfo({ product, onClick }: ProductInfoProps) {
+export default function ProductInfo({ product, className, onClick }: ProductInfoProps) {
   const { name, price, images, category, description, productVariants } = product;
   const imageUrl = images?.[0]?.url;
 
@@ -18,7 +20,7 @@ export default function ProductInfo({ product, onClick }: ProductInfoProps) {
   );
 
   return (
-    <div onClick={onClick} className="border p-4 rounded-md flex flex-col gap-2 hover:shadow-md transition-all duration-300 cursor-pointer">
+    <div onClick={onClick} className={cn("border p-4 rounded-md flex flex-col gap-2 hover:shadow-md transition-all duration-300 cursor-pointer", className)}>
       {imageUrl ? (
         <div className="aspect-square rounded-md overflow-hidden relative">
           <Image
@@ -26,6 +28,7 @@ export default function ProductInfo({ product, onClick }: ProductInfoProps) {
             alt={name}
             fill
             className="object-cover aspect-square rounded-md"
+            unoptimized
           />
         </div>
       ) : (

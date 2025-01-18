@@ -58,6 +58,7 @@ export default function CartItem({ data }: { data: CartItemWithVariant }) {
               alt={name}
               className="object-cover object-center rounded-md"
               fill
+              unoptimized
             />
           )}
         </div>

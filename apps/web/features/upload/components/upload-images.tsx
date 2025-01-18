@@ -76,6 +76,7 @@ export default function UploadImages({ className, onChange, defaultValue }: Uplo
                 alt="image"
                 fill
                 className='rounded-md object-cover'
+                unoptimized
               />
               <button
                 type="button"

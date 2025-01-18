@@ -19,6 +19,7 @@ export const ProductPreview = React.memo(({ images }: ProductPreviewProps) => {
                 alt={image.url}
                 fill
                 className="object-cover rounded-md"
+                unoptimized
               />
             </Tab>
           ))}
@@ -33,6 +34,7 @@ export const ProductPreview = React.memo(({ images }: ProductPreviewProps) => {
                 alt={image.url}
                 fill
                 className="object-cover rounded-md"
+                unoptimized
               />
             </div>
           </TabPanel>
