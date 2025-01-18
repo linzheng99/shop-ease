@@ -37,7 +37,9 @@ export default function Client() {
                   <div className='relative w-full min-h-[300px]'>
                     <Image
                       src={`${process.env.NEXT_PUBLIC_API_URL}/${store.billboards?.[0]?.image.url}`}
-                      alt={store.name} fill className='rounded-md aspect-square' />
+                      alt={store.name} fill className='rounded-md aspect-square'
+                      unoptimized
+                    />
                   </div>
                 ) : (
                   <div className='w-full min-h-[300px] bg-gray-200 rounded-md flex items-center justify-center'>

@@ -68,6 +68,7 @@ export default function BillboardCard({ billboard }: BillboardCardProps) {
             alt={billboard.label}
             fill
             className="object-cover rounded-md"
+            unoptimized
           />
         </div>
       </CardContent>

@@ -17,6 +17,7 @@ export function FeaturedBillboard({ billboards }: FeaturedBillboardProps) {
             alt={featuredBillboard.label}
             fill
             className="rounded-xl aspect-square md:aspect-[2.4/1]"
+            unoptimized
           />
           <div className="absolute h-full w-full flex flex-col justify-center items-center text-center">
             <h1 className="font-bold text-3xl sm:text-5xl sm:max-w-xl max-w-xs">
