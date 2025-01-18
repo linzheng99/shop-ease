@@ -16,7 +16,7 @@ export const useSignout = () => {
     },
     onSuccess: async () => {
       await deleteSession()
-      router.push('/')
+      router.replace('/')
       toast.success('Sign out success!')
     },
     onError: ({ message }) => {

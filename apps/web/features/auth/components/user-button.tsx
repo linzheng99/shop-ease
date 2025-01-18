@@ -3,7 +3,6 @@
 import { LogOut } from "lucide-react"
 import { redirect } from "next/navigation"
 
-import PageLoader from "@/components/page-loader"
 import {
   Avatar,
   AvatarFallback,
@@ -16,16 +15,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Separator } from "@/components/ui/separator"
-import { useCurrent } from "@/features/auth/api/use-current"
 import { useSignout } from "@/features/auth/api/use-signout"
+import { type Session } from "@/lib/session"
 
-export default function UserButton() {
-  const { data: user, isLoading } = useCurrent()
+export default function UserButton({ session }: { session: Session | null }) {
   const { mutate } = useSignout()
 
-  if (isLoading) return <PageLoader />
-
-  if (!user) {
+  if (!session) {
     return (
       <Button variant="default" onClick={() => redirect('/sign-in')}>
         Sign in
@@ -33,8 +29,7 @@ export default function UserButton() {
     )
   }
 
-  const avatarFallback = user?.name?.charAt(0).toUpperCase() || 'U'
-
+  const avatarFallback = session.user.name?.charAt(0).toUpperCase() || 'U'
 
   return (
     <DropdownMenu modal={false}>
@@ -52,8 +47,8 @@ export default function UserButton() {
               {avatarFallback}
             </AvatarFallback>
           </Avatar>
-          {user?.name && <p className='font-semibold'>{user?.name}</p>}
-          {user?.email && <p className='text-sm text-gray-500'>{user?.email}</p>}
+          {session.user.name && <p className='font-semibold'>{session.user.name}</p>}
+          {session.user.email && <p className='text-sm text-gray-500'>{session.user.email}</p>}
         </div>
         <Separator className='mb-1' />
         <DropdownMenuItem

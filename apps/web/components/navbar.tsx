@@ -19,7 +19,7 @@ export default async function Navbar() {
         {session && <CartSign />}
         {session && <OrderSign />}
         <ModeToggle />
-        <UserButton />
+        <UserButton session={session} />
       </div>
     </nav>
   )
