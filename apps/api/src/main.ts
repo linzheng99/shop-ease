@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { type NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 
 import { AppModule } from './app.module';
 
@@ -9,8 +10,8 @@ async function bootstrap() {
     rawBody: true,
   });
 
-  app.useStaticAssets('uploads', {
-    prefix: '/uploads',
+  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
+    prefix: '/uploads/',
   });
 
   app.useGlobalPipes(
@@ -22,9 +23,11 @@ async function bootstrap() {
     }),
   );
 
-  // 允许跨域请求
-  app.enableCors();
+  // CORS配置
+  app.enableCors({
+    origin: '*',
+  });
 
-  await app.listen(8000);
+  await app.listen(4000);
 }
 bootstrap();
